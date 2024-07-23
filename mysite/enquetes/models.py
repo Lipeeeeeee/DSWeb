@@ -8,7 +8,12 @@ class Pergunta(models.Model):
     def __str__(self):
         return f"{self.texto} ({self.id})"
     def publicada_recentemente(self):
-        return self.data_pub >= timezone.now() - datetime.timedelta(hours = 24)
+        agora = timezone.now()
+        return agora - datetime.timedelta(hours = 24) <= self.data_pub <= agora
+    publicada_recentemente.admin_order_field = "texto"
+    publicada_recentemente.boolean = True
+    publicada_recentemente.short_description = "Publiquei agora?"
+
 
 class Alternativa(models.Model):
     texto = models.CharField(max_length = 256)

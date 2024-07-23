@@ -1,6 +1,25 @@
 <html>
     <head>
         <title>App Enquetes</title>
+        <link rel="stylesheet" href="../index.css">
+        <style>
+            h1, h3{
+                color: white;
+                background-color: rgb(0, 204, 204);
+            }
+            li{
+                padding-top: 10px;
+            }
+            a{
+                color: black;
+            }
+            a:hover{
+                color: rgb(0, 204, 204);
+            }
+            li:hover{
+                border: solid rgb(0, 204, 204) 0.5px;
+            }
+        </style>
     </head>
     <body>
         <h1>Aplicação Enquetes - DSWeb 2024.1</h1>
@@ -8,13 +27,14 @@
             <h3>Lista das Enquetes Cadastradas</h3>
             <ul>
                 {% for p in lista_enquetes %}
-                    <li>
-                        <a href = "{% url 'enquetes:detalhes' p.id %}">{{ p.texto }}</a>
-                    </li>
+                    <a href = "{% url 'enquetes:detalhes' p.id %}"><li>
+                        <p>{{ p.texto }}</p>
+                    </li></a>
                 {% endfor %}
             </ul>
         {% else %}
             <h3>Nenhuma enquete cadastrada até o momento!</h3>
         {% endif %}
+        <p><a href = "{% url 'raiz:index' %}">Voltar</a></p>
     </body>
 </html>
