@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Saiba o preço da sua corrida!</title>
+    </head>
+    <body>
+        <h1>Cálculo de corrida do Uber</h1>
+        {% if error %}
+        <p><b>{{ error }}</b></p>
+        {% endif %}
+        <form action="{% url 'corridas:calculaCorrida' %}" method="post">
+            {% csrf_token %}
+            <label for="tipoCorrida">Choose a car:</label>
+            <select name="tipoCorrida">
+
+                <option value="x">UberX</option>
+                <option value="moto">Uber Moto</option>
+                <option value="black">UberBlack</option>
+                <option value="pool">UberPool</option>
+            </select>
+            <br><br>
+            <label for="numPassageiros">Caso tenha escolhido Uber Pool, Diga quantos passageiros terá sua viagem</label>
+            <input type="number" name="numPassageiros"><br>
+            <label for="km">Digite quantos KM será sua viagem</label>
+            <input type="number" name="km">
+            <br><br>
+            <p>Valor da corrida: {{ valor }}</p>
+            <input type="submit" value="Calcular">
+        </form>
+    </body>
+</html>

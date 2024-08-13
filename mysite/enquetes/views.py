@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.utils import timezone
 from .models import Pergunta, Alternativa
 
 
 def index(request):
-    lista = Pergunta.objects.order_by("-data_pub")
+    lista = Pergunta.objects.filter(data_pub__lte=timezone.now()).order_by("-data_pub")
     return render(request, "enquetes/index.html", {"lista_enquetes": lista})
 
 def detalhes(request, pergunta_id):

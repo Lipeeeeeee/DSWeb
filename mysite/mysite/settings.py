@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['lipeAlves.pythonanywhere.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'corridas.apps.CorridasConfig',
     'raiz.apps.RaizConfig',
     'enquetes.apps.EnquetesConfig',
     'django.contrib.admin',
