@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanças pessoais</title>
+</head>
+<body>
+    <h1>{{ balancete.nome }}</h1>
+    <p><a href="{% url 'financas:despesa' balancete.pk %}">Adicionar despesa</a></p>
+    <p><a href="{% url 'financas:receita' balancete.pk %}">Adicionar receita</a></p>
+    <ul>
+        {% for transacao in balancete.transacao_set.all %}
+        <li>{{ transacao.nome }} - {{ transacao.valor }}
+            <img src="{{ transacao.boleto }}" alt="boleto">
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'financas:index' %}">Voltar</a>
+</body>
+</html>

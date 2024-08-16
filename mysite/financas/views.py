@@ -1,21 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
-from models import Balancete, Transacao
+from .models import Balancete, Transacao, Receita, Despesa
 
 class BalanceteView(View):
-    def index(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         balancetes = Balancete.objects.all().order_by("-data")
         return render(request, "financas/index.html", {"balancetes": balancetes})
     
-    def post(self, request, *args, **kwargs):
+    def post(request, *args, **kwargs):
         nome = request.POST["nome"]
         try:
             Balancete.objects.create(nome=nome)
-        except:
-            return render(request, "financas/index.html", {"feedback": "Não foi possível criar balancete!"})
-        return render(request, "financas/index.html", {"feedback": f"Balancete {nome} criado com sucesso!"})
+        except Exception as error:
+            return render(request, "financas/index.html", {"feedback": f"Não foi possível criar balancete! - {error}"})
+        return redirect("financas:index")
     
-    def get(self, request, *args, **kwargs):
+    def get_balancete(self, request, *args, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
         return render(request, "financas/balancete.html", {"balancete": balancete})
 
@@ -26,11 +26,35 @@ class TransacaoView(View):
         return render(request, "financas/transacoes.html", {"transacoes": transacoes})
 
 class ReceitaView(View):
+    def get(self, request, *args, **kwargs):
+        balancete = Balancete.objects.get(pk=kwargs["pk"])
+        return render(request, 'financas/receita.html', {'balancete': balancete})
+
     def post(self, request, *args, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
-        # perguntar como relacionar por código
+        valor = int(request.POST['valor'])
+        valor = valor if valor > 0 else valor * -1
+        dados = {'nome': request.POST['nome'],
+                 'valor': valor, 
+                 'boleto': request.POST['boleto'],
+                 'balancete': balancete
+                }
+        Receita.objects.create(**dados)
+        redirect('index')
 
 class DespesaView(View):
+    def get(self, request, *args, **kwargs):
+        balancete = Balancete.objects.get(pk=kwargs['pk'])
+        return render(request, 'financas/despesa.html', {'balancete': balancete})
+
     def post(self, request, *args, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
-        # perguntar como relacionar por código
+        valor = int(request.POST['valor'])
+        valor = valor if valor < 0 else valor * -1
+        dados = {'nome': request.POST['nome'],
+                 'valor': valor, 
+                 'boleto': request.POST['boleto'],
+                 'balancete': balancete
+                }
+        Despesa.objects.create(**dados)
+        redirect('index')

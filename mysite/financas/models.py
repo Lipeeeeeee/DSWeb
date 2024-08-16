@@ -1,9 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+class Usuario(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class Balancete(models.Model):
     nome = models.CharField("Nome do balancete", max_length=30)
     data = models.DateField("Data de criação do balancete", auto_now_add=True)
     saldo = models.FloatField("Saldo total do balancete", default=0)
+    user = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
 class Transacao(models.Model):
     ...
