@@ -4,13 +4,13 @@ from .models import Balancete, Transacao, Receita, Despesa
 
 class BalanceteView(View):
     def get(self, request, *args, **kwargs):
-        balancetes = Balancete.objects.all().order_by("-data")
+        balancetes = Balancete.objects.all()
         return render(request, "financas/index.html", {"balancetes": balancetes})
     
     def post(request, *args, **kwargs):
         nome = request.POST["nome"]
         try:
-            Balancete.objects.create(nome=nome)
+            Balancete.objects.create(nome=nome, user_id=1)
         except Exception as error:
             return render(request, "financas/index.html", {"feedback": f"Não foi possível criar balancete! - {error}"})
         return redirect("financas:index")
@@ -21,8 +21,11 @@ class BalanceteView(View):
 
 class TransacaoView(View):
     def get(self, request, *args, **kwargs):
-        nome_transacao = request.POST["pesquisa"]
-        transacoes = Transacao.objects.filter(nome=nome_transacao)
+        nome_transacao = request.GET["pesquisa"]
+        try:
+            transacoes = Transacao.objects.filter(nome=nome_transacao)
+        except:
+            return redirect('financas:index')
         return render(request, "financas/transacoes.html", {"transacoes": transacoes})
 
 class ReceitaView(View):
@@ -40,7 +43,7 @@ class ReceitaView(View):
                  'balancete': balancete
                 }
         Receita.objects.create(**dados)
-        redirect('index')
+        redirect('financas:index')
 
 class DespesaView(View):
     def get(self, request, *args, **kwargs):
@@ -57,4 +60,4 @@ class DespesaView(View):
                  'balancete': balancete
                 }
         Despesa.objects.create(**dados)
-        redirect('index')
+        redirect('financas:index')

@@ -11,5 +11,4 @@ urlpatterns = [
     path("despesas/<int:pk>/", views.DespesaView.as_view(), name="despesa"),
     path("despesas/<int:pk>/adicionar/", views.DespesaView.post, name="adicionar_despesa"),
     path("pesquisar/", views.TransacaoView.as_view(), name="transacao")
-
 ]
