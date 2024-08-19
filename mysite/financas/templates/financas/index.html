@@ -18,11 +18,12 @@
         <input type="submit" value="Adicionar">
     </form>
     <form action="{% url 'financas:transacao' %}" method="get">
+        {% csrf_token %}
         <label for="pesquisa">Qual transação deseja ver?</label>
         <input type="search" name="pesquisa">
         <input type="submit" value="Pesquisar">
     </form>
-        {% for balancete in user.balancete_set.all %}
+        {% for balancete in balancetes %}
             <h4><a href="{% url 'financas:get_balancete' balancete.pk %}">{{ balancete.nome }}</a> - {{ balancete.valor }}</h4>
         {% endfor %}
 </body>

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib.auth.models import User
 from .models import Balancete, Transacao, Receita, Despesa
 
 class BalanceteView(View):
@@ -15,7 +16,7 @@ class BalanceteView(View):
             return render(request, "financas/index.html", {"feedback": f"Não foi possível criar balancete! - {error}"})
         return redirect("financas:index")
     
-    def get_balancete(self, request, *args, **kwargs):
+    def get_balancete(request, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
         return render(request, "financas/balancete.html", {"balancete": balancete})
 
@@ -33,9 +34,9 @@ class ReceitaView(View):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
         return render(request, 'financas/receita.html', {'balancete': balancete})
 
-    def post(self, request, *args, **kwargs):
+    def post(request, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
-        valor = int(request.POST['valor'])
+        valor = round(float(request.POST['valor']), 2)
         valor = valor if valor > 0 else valor * -1
         dados = {'nome': request.POST['nome'],
                  'valor': valor, 
@@ -43,16 +44,19 @@ class ReceitaView(View):
                  'balancete': balancete
                 }
         Receita.objects.create(**dados)
-        redirect('financas:index')
+        balancete.saldo += valor
+        balancete.saldo = round(balancete.saldo, 2)
+        balancete.save()
+        return redirect('financas:index')
 
 class DespesaView(View):
     def get(self, request, *args, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs['pk'])
         return render(request, 'financas/despesa.html', {'balancete': balancete})
 
-    def post(self, request, *args, **kwargs):
+    def post(request, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
-        valor = int(request.POST['valor'])
+        valor = round(float(request.POST['valor']), 2)
         valor = valor if valor < 0 else valor * -1
         dados = {'nome': request.POST['nome'],
                  'valor': valor, 
@@ -60,4 +64,7 @@ class DespesaView(View):
                  'balancete': balancete
                 }
         Despesa.objects.create(**dados)
-        redirect('financas:index')
+        balancete.saldo += valor
+        balancete.saldo = round(balancete.saldo, 2)
+        balancete.save()
+        return redirect('financas:index')
