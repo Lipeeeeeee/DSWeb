@@ -24,7 +24,7 @@
         <input type="submit" value="Pesquisar">
     </form>
         {% for balancete in balancetes %}
-            <h4>{{ balancete.data | date:"d/m/Y"}} - <a href="{% url 'financas:get_balancete' balancete.pk %}">{{ balancete.nome }}</a> - R${{ balancete.saldo }}</h4>
+            <h4>{{ balancete.data | date:"d/m/Y"}} - <a href="{% url 'financas:get_balancete' balancete.pk %}">{{ balancete.nome }}</a> - R${{ balancete.saldo | floatformat:2 }}</h4>
         {% endfor %}
 </body>
 </html>

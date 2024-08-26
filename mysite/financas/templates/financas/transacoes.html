@@ -14,9 +14,9 @@
         {% for transacao in transacoes %}
             <li>
                 {% if transacao.valor > 0 %}
-                Receita: {{ transacao }} | R${{ transacao.valor }} - <a href="{% url 'financas:get_balancete' transacao.balancete.pk %}">{{ transacao.balancete.nome }}</a>
+                Receita: {{ transacao }} | R${{ transacao.valor | floatformat:2 }} - <a href="{% url 'financas:get_balancete' transacao.balancete.pk %}">{{ transacao.balancete.nome }}</a>
                 {% else %}
-                Despesa: {{ transacao }} | R${{ transacao.valor }} - <a href="{% url 'financas:get_balancete' transacao.balancete.pk %}">{{ transacao.balancete.nome }}</a>
+                Despesa: {{ transacao }} | R${{ transacao.valor | floatformat:2 }} - <a href="{% url 'financas:get_balancete' transacao.balancete.pk %}">{{ transacao.balancete.nome }}</a>
                 {% endif %}
             </li>
         {% endfor %}
