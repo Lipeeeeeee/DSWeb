@@ -15,7 +15,7 @@
         {% for transacao in balancete.transacao_set.all %}
         <li>
             <p>{{ transacao.nome }} - R${{ transacao.valor | floatformat:2 }}</p>
-            <img src="{{ transacao.boleto.url }}" width="2000px" height="2000px" alt="boleto">
+            <img src="{{ transacao.boleto.url }}">
         </li>
         {% endfor %}
     </ul>
