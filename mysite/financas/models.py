@@ -21,7 +21,7 @@ class Balancete(models.Model):
 class Transacao(models.Model):
     nome = models.CharField("Nome da transação", max_length=30)
     valor = models.FloatField("Valor da transação")
-    boleto = models.ImageField("Foto do boleto da transação", upload_to="", width_field="10", height_field="30", null=True, blank=True)
+    boleto = models.ImageField("Foto do boleto da transação", upload_to="media/", null=True, blank=True)
     balancete = models.ForeignKey(Balancete, on_delete=models.CASCADE)
     def __str__(self):
         return self.nome
