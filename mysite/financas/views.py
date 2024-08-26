@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 from .models import Balancete, Transacao, Receita, Despesa
 
 class BalanceteView(View):
@@ -11,8 +12,8 @@ class BalanceteView(View):
     def post(request, *args, **kwargs):
         nome = request.POST["nome"]
         try:
-            Balancete.objects.create(nome=nome, user_id=1)
-        except Exception as error:
+            Balancete.objects.create(nome=nome, user=request.user)
+        except:
             return render(request, "financas/index.html", {"feedback": "Não foi possível criar balancete!"})
         return redirect("financas:index")
     
@@ -24,7 +25,7 @@ class TransacaoView(View):
     def get(self, request, *args, **kwargs):
         nome_transacao = request.GET["pesquisa"]
         try:
-            transacoes = Transacao.objects.filter(nome__contains=nome_transacao)
+            transacoes = Transacao.objects.filter(nome__contains=nome_transacao, balancete__user=request.user)
         except:
             return redirect('financas:index')
         return render(request, "financas/transacoes.html", {"transacoes": transacoes, "pesquisa": nome_transacao})
@@ -72,3 +73,20 @@ class DespesaView(View):
             return redirect('financas:index')
         except:
             return render(request, "financas/index.html", {"feedback": "Não foi possível criar despesa!"})
+        
+class UserView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'financas/login.html')
+    
+    def post(self, request, *args, **kwargs):
+        credenciais = {'username': request.POST['login'], 'password': request.POST['senha']}
+        user = authenticate(request, **credenciais)
+        if user:
+            login(request, user)
+            return redirect('financas:index')
+        else:
+            return render(request, 'financas/login.html', {'error': f"credenciais {credenciais['login']} e {credenciais['senha']} não autenticadas, corrija os campos e tente novamente!"})
+    
+    def logout(request):
+        logout(request)
+        return redirect('financas:login')

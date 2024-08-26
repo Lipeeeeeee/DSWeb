@@ -7,6 +7,7 @@
     <title>Finanças pessoais</title>
 </head>
 <body>
+    
     <h1>{{ balancete.nome }} - R${{ balancete.saldo | floatformat:2 }}</h1>
     <p><a href="{% url 'financas:despesa' balancete.pk %}">Adicionar despesa</a></p>
     <p><a href="{% url 'financas:receita' balancete.pk %}">Adicionar receita</a></p>

@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Minhas Finanças</h1>
+    <p><a href="{% url 'financas:logout' %}">Logout</a></p>
     {% if feedback %}
     <p>{{ feedback }}</p>
     {% endif %}
