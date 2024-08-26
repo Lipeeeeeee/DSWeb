@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanças pessoais</title>
+</head>
+<body>
+    <h1>Criar Despesa</h1>
+    <form action="{% url 'financas:adicionar_despesa' balancete.pk %}" method="post">
+        {% csrf_token %}
+        <label for="nome">Digite o nome da despesa: 
+            <input type="text" name="nome">
+        </label>
+        <label for="valor">Digite o valor da despesa:
+            <input type="number" step="0.01" name="valor">
+        </label>
+        <label for="boleto">Selecione a foto do boleto: 
+            <input type="file" accept="image/*" name="boleto">
+        </label>
+        <input type="submit" value="Adicionar despesa">
+    </form>
+</body>
+</html>
