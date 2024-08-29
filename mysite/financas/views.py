@@ -32,7 +32,7 @@ class TransacaoView(View):
         nome_transacao = request.GET["pesquisa"]
         try:
             transacoes = Transacao.objects.filter(
-                nome__contains=nome_transacao, balancete__user=request.user
+                nome__contains=nome_transacao, balancete__user=request.user.usuario
             )
         except:
             return redirect("financas:index")
@@ -117,7 +117,7 @@ class UserView(View):
                 request,
                 "financas/login.html",
                 {
-                    "error": f"credenciais {credenciais['login']} e {credenciais['senha']} não autenticadas, corrija os campos e tente novamente!"
+                    "error": f"credenciais {credenciais['username']} e {credenciais['password']} não autenticadas, corrija os campos e tente novamente!"
                 },
             )
 
