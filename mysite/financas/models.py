@@ -30,18 +30,25 @@ class Transacao(models.Model):
     valor = models.FloatField("Valor da transação")
     boleto = models.ImageField("Foto do boleto da transação", null=True, blank=True)
     balancete = models.ForeignKey(Balancete, on_delete=models.CASCADE)
+
     class Meta:
         verbose_name = "Transação"
         verbose_name_plural = "Transações"
 
 
-class Receita(models.Model): 
-    transacao = models.OneToOneField(Transacao, on_delete=models.CASCADE, related_name="rec")
+class Receita(models.Model):
+    transacao = models.OneToOneField(
+        Transacao, on_delete=models.CASCADE, related_name="rec"
+    )
+
     def __str__(self):
         return f"{self.__class__.__name__}: {self.transacao.nome} - R$ {self.transacao.valor:.2f}"
 
 
 class Despesa(models.Model):
-    transacao = models.OneToOneField(Transacao, on_delete=models.CASCADE, related_name="des")
+    transacao = models.OneToOneField(
+        Transacao, on_delete=models.CASCADE, related_name="des"
+    )
+
     def __str__(self):
         return f"{self.__class__.__name__}: {self.transacao.nome} - R$ {self.transacao.valor:.2f}"
