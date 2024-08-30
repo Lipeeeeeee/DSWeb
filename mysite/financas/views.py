@@ -13,12 +13,12 @@ class BalanceteView(View):
     def post(request, *args, **kwargs):
         nome = request.POST["nome"]
         try:
-            Balancete.objects.create(nome=nome, user=request.user)
-        except:
+            Balancete.objects.create(nome=nome, user=request.user.usuario)
+        except Exception as e:
             return render(
                 request,
                 "financas/index.html",
-                {"feedback": "Não foi possível criar balancete!"},
+                {"feedback": f"Não foi possível criar balancete! {e}"},
             )
         return redirect("financas:index")
 
@@ -50,8 +50,7 @@ class ReceitaView(View):
 
     def post(request, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
-        valor = round(float(request.POST["valor"]), 2)
-        valor = valor if valor > 0 else valor * -1
+        valor = float(request.POST["valor"])
         dados = {
             "nome": request.POST["nome"],
             "valor": valor,
@@ -59,7 +58,8 @@ class ReceitaView(View):
             "balancete": balancete,
         }
         try:
-            Receita.objects.create(**dados)
+            transacao = Transacao.objects.create(**dados)
+            Receita.objects.create(transacao=transacao)
             balancete.saldo += valor
             balancete.save()
             return redirect("financas:index")
@@ -78,8 +78,7 @@ class DespesaView(View):
 
     def post(request, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
-        valor = round(float(request.POST["valor"]), 2)
-        valor = valor if valor < 0 else valor * -1
+        valor = float(request.POST["valor"])
         dados = {
             "nome": request.POST["nome"],
             "valor": valor,
@@ -87,15 +86,16 @@ class DespesaView(View):
             "balancete": balancete,
         }
         try:
-            Despesa.objects.create(**dados)
-            balancete.saldo += valor
+            transacao = Transacao.objects.create(**dados)
+            Despesa.objects.create(transacao=transacao)
+            balancete.saldo -= valor
             balancete.save()
             return redirect("financas:index")
-        except:
+        except Exception as e:
             return render(
                 request,
                 "financas/index.html",
-                {"feedback": "Não foi possível criar despesa!"},
+                {"feedback": f"Não foi possível criar despesa! {e}"},
             )
 
 

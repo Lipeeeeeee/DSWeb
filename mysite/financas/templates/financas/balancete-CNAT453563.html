@@ -14,11 +14,7 @@
     <ul>
         {% for transacao in balancete.transacao_set.all %}
         <li>
-            {% if transacao.des %}
-            <p>{{ transacao.des }}</p>
-            {% else %}
-            <p>{{ transacao.rec }}</p>
-            {% endif %}
+            <p>{{ transacao }}</p>
             <img src="{{ transacao.boleto.url }}">
         </li>
         {% endfor %}

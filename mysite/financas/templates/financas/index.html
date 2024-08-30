@@ -11,6 +11,9 @@
     {% if feedback %}
     <p>{{ feedback }}</p>
     {% endif %}
+    {% if not balancetes %}
+        <h4>Ainda não tem balancetes? Adicione um aqui abaixo!</h4>
+    {% endif %}
     <form action="{% url 'financas:balancete' %}" method="post">
         {% csrf_token %}
         <label for="nome">Digite um nome pro seu novo balancete:
