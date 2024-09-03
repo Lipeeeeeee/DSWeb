@@ -117,7 +117,7 @@ class UserView(View):
                 request,
                 "financas/login.html",
                 {
-                    "error": f"credenciais {credenciais['username']} e {credenciais['password']} não autenticadas, corrija os campos e tente novamente!"
+                    "error": f"credenciais não autenticadas, corrija os campos e tente novamente!"
                 },
             )
 
