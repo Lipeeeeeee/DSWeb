@@ -26,7 +26,7 @@
         </label>
         <input type="submit" value="Adicionar">
     </form>
-    <form action="{% url 'financas:transacao' %}" method="get">
+    <form action="{% url 'financas:transacoes' %}" method="get">
         {% csrf_token %}
         <label for="pesquisa">Qual transação deseja ver?</label>
         <input type="search" name="pesquisa">
