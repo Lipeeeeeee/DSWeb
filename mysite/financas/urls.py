@@ -4,23 +4,24 @@ from .views.despesa import DespesaView
 from .views.receita import ReceitaView
 from .views.balancete import BalanceteView
 from .views.transacao import TransacaoView
+from .views.index import IndexView
 
 app_name = "financas"
 urlpatterns = [
     path("", auth.LoginView.as_view(), name="login"),
     path("logout/", auth.LogoutView.as_view(), name="logout"),
-    path("balancete/", BalanceteView.post, name="balancete"),
+    path("balancete/", BalanceteView.as_view(), name="adicionar_balancete"),
     path(
-        "balancete/<int:pk>/", BalanceteView.get_balancete, name="get_balancete"
+        "balancete/<int:pk>/", BalanceteView.as_view(), name="balancete"
     ),
-    path("inicio/", BalanceteView.as_view(), name="index"),
+    path("inicio/", IndexView.as_view(), name="index"),
     path("receitas/<int:pk>/", ReceitaView.as_view(), name="receita"),
     path(
-        "receitas/<int:pk>/adicionar/", ReceitaView.post, name="adicionar_receita"
+        "receitas/<int:pk>/adicionar/", ReceitaView.as_view(), name="adicionar_receita"
     ),
     path("despesas/<int:pk>/", DespesaView.as_view(), name="despesa"),
     path(
-        "despesas/<int:pk>/adicionar/", DespesaView.post, name="adicionar_despesa"
+        "despesas/<int:pk>/adicionar/", DespesaView.as_view(), name="adicionar_despesa"
     ),
     path("pesquisar/", TransacaoView.as_view(), name="transacao"),
 ]

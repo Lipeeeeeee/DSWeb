@@ -19,7 +19,7 @@
     {% if not balancetes %}
         <h4>Ainda não tem balancetes? Adicione um aqui abaixo!</h4>
     {% endif %}
-    <form action="{% url 'financas:balancete' %}" method="post">
+    <form action="{% url 'financas:adicionar_balancete' %}" method="post">
         {% csrf_token %}
         <label for="nome">Digite um nome pro seu novo balancete:
             <input type="text" name="nome">
@@ -33,7 +33,7 @@
         <input type="submit" value="Pesquisar">
     </form>
         {% for balancete in balancetes %}
-            <h4>{{ balancete.data | date:"d/m/Y"}} - <a href="{% url 'financas:get_balancete' balancete.pk %}">{{ balancete.nome }}</a> - R${{ balancete.saldo | floatformat:2 }}</h4>
+            <h4>{{ balancete.data | date:"d/m/Y"}} - <a href="{% url 'financas:balancete' balancete.pk %}">{{ balancete.nome }}</a> - R${{ balancete.saldo | floatformat:2 }}</h4>
         {% endfor %}
 </body>
 </html>
