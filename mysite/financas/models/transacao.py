@@ -4,7 +4,7 @@ from .balancete import Balancete
 class Transacao(models.Model):
     nome = models.CharField("Nome da transação", max_length=30)
     valor = models.FloatField("Valor da transação")
-    boleto = models.ImageField("Foto do boleto da transação", null=True, blank=True)
+    boleto = models.ImageField("Foto do boleto da transação", null=True, blank=True, default="../media/Teste.png")
     balancete = models.ForeignKey(Balancete, on_delete=models.CASCADE)
 
     class Meta:

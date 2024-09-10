@@ -1,15 +1,14 @@
 from django.urls import path
+from django.contrib.auth import views as auth
 from .views.despesa import DespesaView
 from .views.receita import ReceitaView
-from .views.user import UserView
 from .views.balancete import BalanceteView
 from .views.transacao import TransacaoView
 
 app_name = "financas"
 urlpatterns = [
-    path("", UserView.as_view(), name="login"),
-    path("auth/", UserView.as_view(), name="authenticate"),
-    path("logout/", UserView.logout, name="logout"),
+    path("", auth.LoginView.as_view(), name="login"),
+    path("logout/", auth.LogoutView.as_view(), name="logout"),
     path("balancete/", BalanceteView.post, name="balancete"),
     path(
         "balancete/<int:pk>/", BalanceteView.get_balancete, name="get_balancete"

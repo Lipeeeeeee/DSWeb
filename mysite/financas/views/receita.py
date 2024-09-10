@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from financas.models.balancete import Balancete
 from financas.models.transacao import Transacao
@@ -27,10 +28,7 @@ class ReceitaView(View):
             Receita.objects.create(transacao=transacao)
             balancete.saldo += valor
             balancete.save()
-            return redirect("financas:index")
+            messages.success(request, f"Receita {transacao.nome} criada com sucesso!")
         except:
-            return render(
-                request,
-                "financas/index.html",
-                {"feedback": "Não foi possível criar receita!"},
-            )
+            messages.error(request, "Não foi possível criar receita!")
+        return redirect("financas:index")

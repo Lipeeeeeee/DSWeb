@@ -7,9 +7,14 @@
 </head>
 <body>
     <h1>Minhas Finanças</h1>
-    <p><a href="{% url 'financas:logout' %}">Logout</a></p>
-    {% if feedback %}
-    <p>{{ feedback }}</p>
+    <form action="{% url 'logout' %}?next={% url 'login' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
     {% endif %}
     {% if not balancetes %}
         <h4>Ainda não tem balancetes? Adicione um aqui abaixo!</h4>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from financas.models.balancete import Balancete
 
@@ -14,12 +15,9 @@ class BalanceteView(View):
         nome = request.POST["nome"]
         try:
             Balancete.objects.create(nome=nome, user=request.user.usuario)
-        except Exception as e:
-            return render(
-                request,
-                "financas/index.html",
-                {"feedback": f"Não foi possível criar balancete! {e}"},
-            )
+            messages.success(request, "Balancete criado com sucesso!")
+        except:
+            messages.error(request, "Não foi possível criar balancete!")
         return redirect("financas:index")
 
     def get_balancete(request, **kwargs):
