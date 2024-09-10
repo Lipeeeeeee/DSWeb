@@ -1,6 +1,7 @@
 from django.db import models
 from .transacao import Transacao
 
+
 class Receita(models.Model):
     transacao = models.OneToOneField(
         Transacao, on_delete=models.CASCADE, related_name="rec"

@@ -1,6 +1,7 @@
 from django.db import models
 from .usuario import Usuario
 
+
 class Balancete(models.Model):
     nome = models.CharField("Nome do balancete", max_length=30, unique=True)
     data = models.DateTimeField("Data de criação do balancete", auto_now_add=True)

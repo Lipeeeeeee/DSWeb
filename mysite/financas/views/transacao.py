@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from financas.models.transacao import Transacao
 
+
 @method_decorator(login_required, name="dispatch")
 class TransacaoView(View):
     def get(self, request, *args, **kwargs):

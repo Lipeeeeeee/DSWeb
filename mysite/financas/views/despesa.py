@@ -7,6 +7,7 @@ from financas.models.balancete import Balancete
 from financas.models.transacao import Transacao
 from financas.models.despesa import Despesa
 
+
 @method_decorator(login_required, name="dispatch")
 class DespesaView(View):
     def get(self, request, *args, **kwargs):

@@ -11,9 +11,7 @@ urlpatterns = [
     path("", auth.LoginView.as_view(), name="login"),
     path("logout/", auth.LogoutView.as_view(), name="logout"),
     path("balancete/", BalanceteView.as_view(), name="adicionar_balancete"),
-    path(
-        "balancete/<int:pk>/", BalanceteView.as_view(), name="balancete"
-    ),
+    path("balancete/<int:pk>/", BalanceteView.as_view(), name="balancete"),
     path("inicio/", IndexView.as_view(), name="index"),
     path("receitas/<int:pk>/", ReceitaView.as_view(), name="receita"),
     path(

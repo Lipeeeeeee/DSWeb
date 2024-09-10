@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from financas.models.balancete import Balancete
 
+
 @method_decorator(login_required, name="dispatch")
 class BalanceteView(View):
     def get(request, **kwargs):
