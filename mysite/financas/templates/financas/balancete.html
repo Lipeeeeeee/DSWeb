@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,13 +7,19 @@
     <title>Finanças pessoais</title>
 </head>
 <body>
-    <h1>{{ balancete.nome }} - R${{ balancete.saldo }}</h1>
+    
+    <h1>{{ balancete.nome }} - R${{ balancete.saldo | floatformat:2 }}</h1>
     <p><a href="{% url 'financas:despesa' balancete.pk %}">Adicionar despesa</a></p>
     <p><a href="{% url 'financas:receita' balancete.pk %}">Adicionar receita</a></p>
     <ul>
         {% for transacao in balancete.transacao_set.all %}
-        <li>{{ transacao.nome }} - R${{ transacao.valor }}
-            <img src="{{ transacao.boleto }}" alt="boleto">
+        <li>
+            {% if transacao.des %}
+            <p>{{ transacao.des }}</p>
+            {% else %}
+            <p>{{ transacao.rec }}</p>
+            {% endif %}
+            <img src="{{ transacao.boleto.url }}">
         </li>
         {% endfor %}
     </ul>
