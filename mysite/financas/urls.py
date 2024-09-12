@@ -5,11 +5,14 @@ from .views.receita import ReceitaView
 from .views.balancete import BalanceteView
 from .views.transacao import TransacaoView
 from .views.index import IndexView
+from .views.cadastro import CadastroView
 
 app_name = "financas"
 urlpatterns = [
     path("", auth.LoginView.as_view(), name="login"),
     path("logout/", auth.LogoutView.as_view(), name="logout"),
+    path("cadastro/", CadastroView.as_view(), name="cadastro"),
+    path("cadastrar/", CadastroView.as_view(), name="cadastrar"),
     path("balancetes/", BalanceteView.as_view(), name="adicionar_balancete"),
     path("balancete/<int:pk>/", BalanceteView.as_view(), name="balancete"),
     path("inicio/", IndexView.as_view(), name="index"),

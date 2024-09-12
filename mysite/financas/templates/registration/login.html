@@ -10,7 +10,7 @@
 <body>
     <h1>Acompanhe aqui suas finanças pessoais :D</h1>
     {% if error %}
-    <p class="error">{{ error }}</p>
+    <p>{{ error }}</p>
     {% endif %}
     <div>
         <h4>Login</h4>
@@ -19,6 +19,7 @@
             {{ form.as_p }}
             <input type="submit" value="Entrar">
         </form>
+        <p>Não possui cadastro? <a href="% url 'cadastro' %">Cadastre-se</a></p>
     </div>
 </body>
 </html>

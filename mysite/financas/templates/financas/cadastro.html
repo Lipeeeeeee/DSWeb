@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'financas/login.css' %}">
+    <title>Finanças pessoais</title>
+</head>
+<body>
+    <h1>Acompanhe aqui suas finanças pessoais :D</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <div>
+        <h4>Cadastro</h4>
+        <form action="{% url 'cadastrar' %}" method="post">
+            {% csrf_token %}
+            <label for="username">Nome de usuário:
+                <input type="text" name="username">
+            </label>
+            <label for="password">Senha:
+                <input type="text" name="password">
+            </label>
+            <input type="submit" value="Entrar">
+        </form>
+        <p>Não possui cadastro? <a href="{% url 'cadastro' %}">Cadastre-se</a></p>
+    </div>
+</body>
+</html>
