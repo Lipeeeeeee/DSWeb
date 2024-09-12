@@ -1,39 +1,45 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'financas/index.css' %}">
     <title>Finanças pessoais</title>
 </head>
 <body>
-    <h1>Minhas Finanças</h1>
-    <form action="{% url 'logout' %}?next={% url 'login' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Logout">
-    </form>
-    {% if messages %}
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-    {% if not balancetes %}
-        <h4>Ainda não tem balancetes? Adicione um aqui abaixo!</h4>
-    {% endif %}
-    <form action="{% url 'financas:adicionar_balancete' %}" method="post">
-        {% csrf_token %}
-        <label for="nome">Digite um nome pro seu novo balancete:
-            <input type="text" name="nome">
-        </label>
-        <input type="submit" value="Adicionar">
-    </form>
-    <form action="{% url 'financas:transacoes' %}" method="get">
-        {% csrf_token %}
-        <label for="pesquisa">Qual transação deseja ver?</label>
-        <input type="search" name="pesquisa">
-        <input type="submit" value="Pesquisar">
-    </form>
+    <div class="main">
+        <div class="titulo">
+            <h1>Minhas Finanças</h1>
+            <form action="{% url 'logout' %}?next={% url 'login' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Logout">
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="message">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% if not balancetes %}
+            <h4>Ainda não tem balancetes? Adicione um aqui abaixo!</h4>
+        {% endif %}
+        <form action="{% url 'financas:adicionar_balancete' %}" method="post">
+            {% csrf_token %}
+            <label for="nome">Digite um nome pro seu novo balancete:
+                <input type="text" name="nome">
+            </label>
+            <input type="submit" value="Adicionar">
+        </form>
+        <form action="{% url 'financas:transacoes' %}" method="get">
+            {% csrf_token %}
+            <label for="pesquisa">Qual transação deseja ver?</label>
+            <input type="search" name="pesquisa">
+            <input type="submit" value="Pesquisar">
+        </form>
         {% for balancete in balancetes %}
             <h4>{{ balancete.data | date:"d/m/Y"}} - <a href="{% url 'financas:balancete' balancete.pk %}">{{ balancete.nome }}</a> - R${{ balancete.saldo | floatformat:2 }}</h4>
         {% endfor %}
+    </div>
 </body>
 </html>

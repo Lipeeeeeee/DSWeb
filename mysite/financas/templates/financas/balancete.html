@@ -4,25 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'financas/balancete.css' %}">
     <title>Finanças pessoais</title>
 </head>
 <body>
-    
-    <h1>{{ balancete.nome }} - R${{ balancete.saldo | floatformat:2 }}</h1>
-    <p><a href="{% url 'financas:despesa' balancete.pk %}">Adicionar despesa</a></p>
-    <p><a href="{% url 'financas:receita' balancete.pk %}">Adicionar receita</a></p>
-    <ul>
-        {% for transacao in balancete.transacao_set.all %}
-        <li>
-            {% if transacao.des %}
-            <p>{{ transacao.des }}</p>
-            {% else %}
-            <p>{{ transacao.rec }}</p>
-            {% endif %}
-            <img src="{{ transacao.boleto.url }}">
-        </li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'financas:index' %}">Voltar</a>
+    <div class="main">
+        <h1>{{ balancete.nome }} - R${{ balancete.saldo | floatformat:2 }}</h1>
+        <p><a href="{% url 'financas:despesa' balancete.pk %}">Adicionar despesa</a></p>
+        <p><a href="{% url 'financas:receita' balancete.pk %}">Adicionar receita</a></p>
+        {% if balancete.transacao_set.all %}
+            <ul>
+                {% for transacao in balancete.transacao_set.all %}
+                <li>
+                    {% if transacao.des %}
+                    <p>{{ transacao.des }}</p>
+                    {% else %}
+                    <p>{{ transacao.rec }}</p>
+                    {% endif %}
+                    <img class="imagem" width="500px" src="{{ transacao.boleto.url }}">
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Você não tem transações neste balancete, começe a adicionar!!</p>
+        {% endif %}
+        <a href="{% url 'financas:index' %}">Voltar</a>
+    </div>
 </body>
 </html>

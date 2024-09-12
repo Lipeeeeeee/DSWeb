@@ -9,12 +9,21 @@ body{
     justify-content: center;
 }
 
-div{
-    width: 50%;
+.main{
+    width: 60%;
     background-color: rgb(204, 255, 204);
     border-radius: 30px;
     padding: 20px;
     align-self: center;
+}
+
+form{
+    margin: 10px 0;
+}
+
+.message{
+    color: green;
+    font-size: 20px;
 }
 
 h1, h4, input{
@@ -28,4 +37,9 @@ input[type=submit]{
     border: none;
     border-radius: 10px;
     padding: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(0, 77, 0);
 }

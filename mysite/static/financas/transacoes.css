@@ -9,12 +9,21 @@ body{
     justify-content: center;
 }
 
-div{
-    width: 50%;
+ul{
+    list-style: none;
+}
+
+.main{
+    width: 80%;
     background-color: rgb(204, 255, 204);
     border-radius: 30px;
     padding: 20px;
     align-self: center;
+}
+
+.message{
+    color: green;
+    font-size: 20px;
 }
 
 h1, h4, input{
@@ -22,10 +31,25 @@ h1, h4, input{
 }
 
 input[type=submit]{
+    align-self: center;
+    width: 20%;
     cursor: pointer;
     color: rgb(204, 255, 204);
     background-color: green;
     border: none;
     border-radius: 10px;
     padding: 10px;
+    margin: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(204, 255, 204);
+    background-color: green;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+p{
+    margin: 20px;
 }

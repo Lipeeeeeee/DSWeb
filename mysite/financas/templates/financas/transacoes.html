@@ -1,27 +1,31 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'financas/transacoes.css' %}">
     <title>Finanças pessoais</title>
 </head>
 <body>
-    <h1>Resultados para "{{ pesquisa }}"</h1>
-    {% if not transacoes %}
-    <p>Não há resultados para essa pesquisa</p>
-    {% else %}
-    <ul>
-        {% for transacao in transacoes %}
-            <li>
-                {% if transacao.des %}
-                {{ transacao.des }} - <a href="{% url 'financas:get_balancete' transacao.balancete.pk %}">{{ transacao.balancete.nome }}</a>
-                {% else %}
-                {{ transacao.rec }} - <a href="{% url 'financas:get_balancete' transacao.balancete.pk %}">{{ transacao.balancete.nome }}</a>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <a href="{% url 'financas:index' %}">Voltar</a>
+    <div class="main">
+        <h1>Resultados para "{{ pesquisa }}"</h1>
+        {% if not transacoes %}
+        <p>Não há resultados para essa pesquisa</p>
+        {% else %}
+        <ul>
+            {% for transacao in transacoes %}
+                <li>
+                    {% if transacao.des %}
+                    {{ transacao.des }} - <a href="{% url 'financas:balancete' transacao.balancete.pk %}">{{ transacao.balancete.nome }}</a>
+                    {% else %}
+                    {{ transacao.rec }} - <a href="{% url 'financas:balancete' transacao.balancete.pk %}">{{ transacao.balancete.nome }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <a href="{% url 'financas:index' %}">Voltar</a>
+    </div>
 </body>
 </html>

@@ -14,7 +14,7 @@ class ReceitaView(View):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
         return render(request, "financas/receita.html", {"balancete": balancete})
 
-    def post(request, **kwargs):
+    def post(self, request, *args, **kwargs):
         balancete = Balancete.objects.get(pk=kwargs["pk"])
         valor = float(request.POST["valor"])
         dados = {
