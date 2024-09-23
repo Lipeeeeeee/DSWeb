@@ -10,7 +10,7 @@
 <body>
     <div class="main">
         <h1>Criar Receita</h1>
-        <form action="{% url 'financas:adicionar_receita' balancete.pk %}" method="post">
+        <form action="{% url 'financas:adicionar_receita' balancete.pk %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="nome">Digite o nome da receita:
                 <input type="text" name="nome">

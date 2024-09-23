@@ -20,7 +20,7 @@ class ReceitaView(View):
         dados = {
             "nome": request.POST["nome"],
             "valor": valor,
-            "boleto": request.POST["boleto"],
+            "boleto": request.FILES["boleto"],
             "balancete": balancete,
         }
         try:

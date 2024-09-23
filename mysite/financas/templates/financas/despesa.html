@@ -10,7 +10,7 @@
 <body>
     <div class="main">
         <h1>Criar Despesa</h1>
-        <form action="{% url 'financas:adicionar_despesa' balancete.pk %}" method="post">
+        <form action="{% url 'financas:adicionar_despesa' balancete.pk %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="nome">Digite o nome da despesa:
                 <input type="text" name="nome">
